@@ -1,0 +1,31 @@
+type RegisterRequest {
+	// 用户id
+	Id int64 `json:"id"`
+	// 用户名称
+	Name string `json:"name"`
+	// 用户性别
+	Gender string `json:"gender"`
+	// 国家
+	Country string `json:"country"`
+	//密码
+	Password string `json:"password"`
+	//手机号
+	Mobile string `json:"mobile"`
+}
+type LoginRequest {
+	//手机号
+	Mobile string `json:"mobile"`
+	//密码
+	Password string `json:"password"`
+}
+type Response {
+	Message string `json:"message"`
+}
+
+service user-api {
+	@handler Register
+	post /api/user/register (RegisterRequest) returns (Response)
+	@handler Login
+	post /api/user/login (LoginRequest) returns (Response)
+	
+}

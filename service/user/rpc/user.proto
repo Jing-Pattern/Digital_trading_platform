@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package user;
+
+// protoc-gen-go 版本大于1.4.0, proto文件需要加上go_package,否则无法生成
+option go_package = "./user";
+
+message IdRequest {
+  string id = 1;
+}
+message PwdRequest {
+  string id = 1;
+  string password = 3;
+}
+message SendCode {
+  string Mobile=1;
+}
+message Code {
+  string smsCode=1;
+}
+message UserInfoWithPwd  {
+  // 用户id
+  string id = 1;
+  // 用户名称
+  string name = 2;
+  // 用户性别
+  string gender = 3;
+  // 国家
+  string country=4;
+  //密码
+  string code=5;
+  // 人机验证
+  PeoMachVerify robotVerify=6;
+  //手机号
+  string Mobile=7;
+}
+message UserInfo{
+  // 用户id
+  string id = 1;
+  // 用户名称
+  string name = 2;
+  // 用户性别
+  string gender = 3;
+  // 国家
+  string country = 4;
+  // 手机号
+  string Mobile = 5;
+}
+// 人机验证
+message PeoMachVerify {
+  string server=1;
+  string token=2;
+}
+message Result {
+  string message =1;
+}
+service User {
+  rpc register(UserInfoWithPwd) returns(Result);
+  rpc login(IdRequest) returns(UserInfo);
+  rpc getUser(IdRequest) returns(UserInfo);
+  rpc saveUser(IdRequest) returns(Result);
+  rpc updateUser(UserInfo) returns(Result);
+  rpc deleteUser(IdRequest) returns(Result);
+  rpc changeUserPwd(PwdRequest) returns(Result);
+  rpc sendCode(SendCode) returns(Code);
+}
